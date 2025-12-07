@@ -183,7 +183,7 @@ class DatabaseSeeder extends Seeder
 
         OrderItem::create([
             'order_id' => $order2->id,
-            'product_id' => 2, // Sofa
+            'product_id' => 2, 
             'product_name' => 'Asgard Sofa 3 Seater',
             'quantity' => 1,
             'price_per_unit' => 6000000,

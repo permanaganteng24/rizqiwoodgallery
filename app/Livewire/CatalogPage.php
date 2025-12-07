@@ -8,7 +8,7 @@ use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Database\Eloquent\Builder;
+use App\Helpers\CartManagement;
 
 class CatalogPage extends Component
 {
@@ -30,20 +30,46 @@ class CatalogPage extends Component
 
     #[Url]
     public $sort = 'latest';
-    
+
     #[Url]
     public $readyStock = false;
 
-    public function updatedSearch() { $this->resetPage(); }
-    public function updatedSelectedCategories() { $this->resetPage(); }
-    public function updatedPriceMin() { $this->resetPage(); }
-    public function updatedPriceMax() { $this->resetPage(); }
-    public function updatedSort() { $this->resetPage(); }
-    public function updatedReadyStock() { $this->resetPage(); }
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+    public function updatedSelectedCategories()
+    {
+        $this->resetPage();
+    }
+    public function updatedPriceMin()
+    {
+        $this->resetPage();
+    }
+    public function updatedPriceMax()
+    {
+        $this->resetPage();
+    }
+    public function updatedSort()
+    {
+        $this->resetPage();
+    }
+    public function updatedReadyStock()
+    {
+        $this->resetPage();
+    }
+
+    public function addToCart($product_id)
+    {
+        $total_count = CartManagement::addItemToCart($product_id);
+
+        $this->dispatch('cart-updated', total_count: $total_count);
+        $this->dispatch('alert', type: 'success', message: 'Berhasil masuk keranjang!');
+    }
 
     public function render()
     {
-        $query = Product::query()->where('is_active', true); 
+        $query = Product::query()->where('is_active', true);
 
         if ($this->search) {
             $query->where('name', 'like', '%' . $this->search . '%');
@@ -51,7 +77,7 @@ class CatalogPage extends Component
 
         if (!empty($this->selectedCategories)) {
             $query->whereHas('categories', function ($q) {
-                $q->whereIn('id', $this->selectedCategories);
+                $q->whereIn('categories.id', $this->selectedCategories);
             });
         }
 
@@ -76,7 +102,7 @@ class CatalogPage extends Component
 
         return view('livewire.catalog-page', [
             'products' => $query->paginate(9),
-            'categories' => Category::orderBy('name')->get(), 
+            'categories' => Category::orderBy('name')->get(),
         ]);
     }
 

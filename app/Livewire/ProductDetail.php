@@ -5,9 +5,12 @@ namespace App\Livewire;
 use App\Models\Product;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use App\Helpers\CartManagement;
+use Jantinn\LivewireAlert\LivewireAlert;
 
 class ProductDetail extends Component
 {
+
     public $slug;
     public $quantity = 1;
 
@@ -18,7 +21,10 @@ class ProductDetail extends Component
 
     public function incrementQty()
     {
-        $this->quantity++;
+        $product = Product::where('slug', $this->slug)->first();
+        if ($product && $this->quantity < $product->stock) {
+            $this->quantity++;
+        }
     }
 
     public function decrementQty()
@@ -30,10 +36,25 @@ class ProductDetail extends Component
 
     public function addToCart()
     {
-        $this->dispatch('notify', 'Fitur Keranjang akan segera hadir!');
+        $product = Product::where('slug', $this->slug)->first();
+
+        // Validasi jika produk tidak ditemukan
+        if (!$product) {
+            return;
+        }
+
+        // Validasi Stok
+        if ($product->stock <= 0) {
+            $this->dispatch('alert', type: 'error', message: 'Stok barang habis!');
+            return;
+        }
+
+        $total_count = CartManagement::addItemToCartWithQty($product->id, $this->quantity);
+        $this->dispatch('cart-updated', total_count: $total_count);
+        $this->dispatch('alert', type: 'success', message: 'Berhasil masuk keranjang!');
     }
 
-    #[Title('Detail Produk')] 
+    #[Title('Detail Produk')]
     public function render()
     {
         $product = Product::where('slug', $this->slug)
@@ -42,12 +63,12 @@ class ProductDetail extends Component
             ->firstOrFail();
 
         $relatedProducts = Product::whereHas('categories', function ($query) use ($product) {
-                $query->whereIn('categories.id', $product->categories->pluck('id'));
-            })
-            ->where('id', '!=', $product->id) 
-            ->where('is_active', true)
-            ->take(4)
-            ->get();
+            $query->whereIn('categories.id', $product->categories->pluck('id'));
+        })
+        ->where('id', '!=', $product->id)
+        ->where('is_active', true)
+        ->take(4)
+        ->get();
 
         return view('livewire.product-detail', [
             'product' => $product,

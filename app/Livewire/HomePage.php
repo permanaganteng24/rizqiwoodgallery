@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Review;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -20,9 +21,16 @@ class HomePage extends Component
             ->take(8)
             ->get();
 
+        $reviews = Review::where('is_approved', true) 
+            ->with('user') 
+            ->latest()
+            ->take(6)
+            ->get();
+
         return view('livewire.home-page', [
             'categories' => $categories,
             'products' => $products,
+            'reviews' => $reviews, 
         ]);
     }
 }
