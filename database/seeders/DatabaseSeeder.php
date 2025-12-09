@@ -2,202 +2,217 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\Product;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductGallery;
+use App\Models\Coupon;
+use App\Models\Review;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Review;
-use App\Models\LocalShippingRate;
-use App\Models\UserAddress;
-use Carbon\Carbon;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // ADMIN & CUSTOMER
+        // SEED USERS -----
         $admin = User::create([
-            'name' => 'Admin Rizqi Wood',
+            'name' => 'Super Admin',
             'email' => 'admin@rizqiwood.com',
-            'password' => Hash::make('password'),
-            'phone' => '081234567890',
             'role' => 'admin',
-        ]);
-
-        $customer = User::create([
-            'name' => 'Budi Santoso',
-            'email' => 'budi@gmail.com',
             'password' => Hash::make('password'),
-            'phone' => '089876543210',
+            'email_verified_at' => now(),
+        ]);
+
+        $customer1 = User::create([
+            'name' => 'Ijat Pulu Pulu',
+            'email' => 'ijat@gmail.com',
             'role' => 'customer',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
         ]);
 
-        // Alamat Customer
-        UserAddress::create([
-            'user_id' => $customer->id,
-            'label' => 'Rumah Mataram',
-            'recipient_name' => 'Budi Santoso',
-            'phone' => '089876543210',
-            'country' => 'Indonesia',
-            'province' => 'Nusa Tenggara Barat',
-            'city' => 'Mataram',
-            'district' => 'Mataram',
-            'postal_code' => '83126',
-            'address_line' => 'Jl. Majapahit No. 12, Mataram',
-            'is_default' => true,
+        $customer2 = User::create([
+            'name' => 'John Doe (US)',
+            'email' => 'john.doe@example.com',
+            'role' => 'customer',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
         ]);
 
-        $shippingRates = [
-            ['city' => 'Mataram', 'district' => 'Mataram', 'rate' => 5000],
-            ['city' => 'Mataram', 'district' => 'Ampenan', 'rate' => 5000],
-            ['city' => 'Mataram', 'district' => 'Cakranegara', 'rate' => 5000],
-            ['city' => 'Lombok Barat', 'district' => 'Batu Layar', 'rate' => 10000],
-            ['city' => 'Lombok Barat', 'district' => 'Gunung Sari', 'rate' => 10000],
-            ['city' => 'Lombok Tengah', 'district' => 'Praya', 'rate' => 15000],
-        ];
+        // ----- SEED CATEGORIES -----
+        $catLiving = Category::create([
+            'name' => 'Living Room', 
+            'slug' => 'living-room', 
+            'icon' => 'living-room.jpg'
+        ]);
+        
+        $catBed = Category::create([
+            'name' => 'Bedroom', 
+            'slug' => 'bedroom', 
+            'icon' => 'bedroom.jpg'
+        ]);
+        
+        $catKitchen = Category::create([
+            'name' => 'Kitchen & Dining', 
+            'slug' => 'kitchen-dining', 
+            'icon' => 'kitchen.jpg'
+        ]);
+        
+        $catDecor = Category::create([
+            'name' => 'Decoration', 
+            'slug' => 'decoration', 
+            'icon' => 'teakroot.jpg'
+        ]);
 
-        foreach ($shippingRates as $rate) {
-            LocalShippingRate::create([
-                'province' => 'Nusa Tenggara Barat',
-                'city' => $rate['city'],
-                'district' => $rate['district'],
-                'rate_per_kg' => $rate['rate'],
-            ]);
-        }
+        // ----- SEED PRODUCTS -----
+        // Produk 1: Kursi (Ready)
+        $p1 = Product::create([
+            'name' => 'Teak Lounge Chair - Minimalist Series',
+            'slug' => 'teak-lounge-chair',
+            'description' => '<p>Kursi santai dengan desain minimalis modern berbahan kayu jati solid asli Perhutani. Cocok untuk ruang tamu atau teras.</p>',
+            'price' => 2500000,
+            'weight_kg' => 12,
+            'length_cm' => 60, 'width_cm' => 65, 'height_cm' => 80,
+            'material' => 'Solid Teak Wood',
+            'finishing' => 'Matte Natural',
+            'stock' => 15,
+            'availability' => 'ready',
+            'is_active' => true,
+            'is_featured' => true,
+        ]);
+        $p1->categories()->attach([$catLiving->id, $catDecor->id]);
+        ProductGallery::create(['product_id' => $p1->id, 'image_url' => 'products/chair-1.jpg', 'is_thumbnail' => true]);
+        ProductGallery::create(['product_id' => $p1->id, 'image_url' => 'products/chair-2.jpg', 'is_thumbnail' => false]);
 
-        // KATEGORI
-        $categories = [
-            ['name' => 'Living Room', 'slug' => 'living-room'],
-            ['name' => 'Bedroom', 'slug' => 'bedroom'],
-            ['name' => 'Kitchen & Dining', 'slug' => 'kitchen-dining'],
-            ['name' => 'Decoration', 'slug' => 'decoration'],
-        ];
+        // Produk 2: Meja (Ready)
+        $p2 = Product::create([
+            'name' => 'Rustic Coffee Table',
+            'slug' => 'rustic-coffee-table',
+            'description' => '<p>Meja kopi gaya rustic dengan serat kayu alami yang menonjol. Tahan lama dan estetik.</p>',
+            'price' => 1500000,
+            'weight_kg' => 25,
+            'length_cm' => 100, 'width_cm' => 60, 'height_cm' => 45,
+            'material' => 'Teak Root',
+            'finishing' => 'Rustic Oil',
+            'stock' => 5,
+            'availability' => 'ready',
+            'is_active' => true,
+            'is_featured' => true,
+        ]);
+        $p2->categories()->attach($catLiving->id);
+        ProductGallery::create(['product_id' => $p2->id, 'image_url' => 'products/table-1.jpg', 'is_thumbnail' => true]);
 
-        foreach ($categories as $cat) {
-            Category::create($cat);
-        }
+        // Produk 3: Sofa (Pre-Order)
+        $p3 = Product::create([
+            'name' => 'Asgard Sofa 3 Seater',
+            'slug' => 'asgard-sofa-3-seater',
+            'description' => '<p>Sofa nyaman 3 dudukan dengan rangka kayu jati kokoh dan busa royal foam empuk.</p>',
+            'price' => 6000000,
+            'weight_kg' => 45,
+            'length_cm' => 200, 'width_cm' => 80, 'height_cm' => 85,
+            'material' => 'Teak Wood & Fabric',
+            'finishing' => 'Walnut Brown',
+            'stock' => 2,
+            'availability' => 'pre_order',
+            'is_active' => true,
+            'is_featured' => true,
+        ]);
+        $p3->categories()->attach($catLiving->id);
+        ProductGallery::create(['product_id' => $p3->id, 'image_url' => 'products/sofa-1.jpg', 'is_thumbnail' => true]);
 
-        // BUAT PRODUK
-        $products = [
-            [
-                'name' => 'Teak Lounge Chair',
-                'slug' => 'teak-lounge-chair',
-                'description' => 'Kursi santai minimalis berbahan jati solid.',
-                'price' => 2500000,
-                'weight_kg' => 8,
-                'length_cm' => 60, 'width_cm' => 60, 'height_cm' => 80,
-                'material' => 'Solid Teak',
-                'finishing' => 'Natural Matte',
-                'color' => 'Natural',
-                'stock' => 10,
-                'availability' => 'ready',
-            ],
-            [
-                'name' => 'Asgard Sofa 3 Seater',
-                'slug' => 'asgard-sofa-3-seater',
-                'description' => 'Sofa nyaman dengan rangka kayu mahoni.',
-                'price' => 6000000,
-                'weight_kg' => 45,
-                'length_cm' => 200, 'width_cm' => 85, 'height_cm' => 75,
-                'material' => 'Mahogany & Fabric',
-                'finishing' => 'Dark Walnut',
-                'color' => 'Navy Blue',
-                'stock' => 5,
-                'availability' => 'pre_order',
-            ],
-            [
-                'name' => 'Rustic Coffee Table',
-                'slug' => 'rustic-coffee-table',
-                'description' => 'Meja kopi dari akar jati asli.',
-                'price' => 1500000,
-                'weight_kg' => 15,
-                'length_cm' => 100, 'width_cm' => 60, 'height_cm' => 45,
-                'material' => 'Teak Root',
-                'finishing' => 'Glossy',
-                'color' => 'Natural Root',
-                'stock' => 3,
-                'availability' => 'ready',
-            ],
-        ];
+        // ----- SEED COUPONS -----
+        Coupon::create([
+            'code' => 'WELCOME10',
+            'type' => 'percent',
+            'value' => 10,
+            'is_active' => true,
+        ]);
+        Coupon::create([
+            'code' => 'HEMAT100',
+            'type' => 'fixed',
+            'value' => 100000,
+            'is_active' => true,
+        ]);
 
-        foreach ($products as $prodData) {
-            $product = Product::create($prodData);
-            $catIds = Category::inRandomOrder()->take(rand(1, 2))->pluck('id');
-            $product->categories()->attach($catIds);
+        // ----- SEED REVIEWS -----
+        Review::create([
+            'user_id' => $customer1->id,
+            'product_id' => $p1->id,
+            'rating' => 5,
+            'comment' => 'Barang sangat bagus, kayunya kokoh dan finishing halus. Pengiriman ke Mataram gratis!',
+            'is_approved' => true,
+        ]);
+        Review::create([
+            'user_id' => $customer2->id,
+            'product_id' => $p1->id,
+            'rating' => 4,
+            'comment' => 'Good quality product, but shipping to US took quite some time. Packaging was excellent though.',
+            'is_approved' => true,
+        ]);
 
-        }
-
-
-        // Skenario A: Order Domestik (Mataram) - SUDAH BAYAR
+        // ----- SEED ORDERS -----
+        
+        // Order 1: Lokal (Sudah Bayar & Selesai)
         $order1 = Order::create([
-            'user_id' => $customer->id,
-            'code' => 'ORD-2025-001',
-            'shipping_name' => 'Budi Santoso',
-            'shipping_phone' => '089876543210',
-            'shipping_address' => 'Jl. Majapahit No. 12',
-            'shipping_city' => 'Mataram',
-            'shipping_province' => 'NTB',
+            'user_id' => $customer1->id,
+            'code' => 'ORD-LOC-001',
+            'shipping_name' => 'Permana Customer',
+            'shipping_phone' => '08123456789',
+            'shipping_email' => 'permana@gmail.com',
+            'shipping_address' => 'Jl. Majapahit No 10',
             'shipping_country' => 'Indonesia',
+            'shipping_province' => 'Nusa Tenggara Barat',
+            'shipping_city' => 'Kota Mataram',
             'shipping_district' => 'Mataram',
-            'shipping_method' => 'domestic',
-            'total_weight_kg' => 8,
+            'shipping_postal_code' => '83115',
+            'shipping_method' => 'Free Local Shipping',
+            'total_weight_kg' => 12,
             'total_product_price' => 2500000,
-            'shipping_price' => 40000,
-            'grand_total' => 2540000,
-            'order_status' => 'processing',
+            'grand_total' => 2500000,
+            'order_status' => 'completed',
             'payment_status' => 'paid',
-            'payment_url' => 'https://app.midtrans.com/snap/v1/transactions/example',
-            'paid_at' => Carbon::now(),
+            'paid_at' => now(),
         ]);
-
         OrderItem::create([
             'order_id' => $order1->id,
-            'product_id' => 1, // Kursi
-            'product_name' => 'Teak Lounge Chair',
+            'product_id' => $p1->id,
+            'product_name' => $p1->name,
             'quantity' => 1,
-            'price_per_unit' => 2500000,
-            'subtotal' => 2500000,
+            'price_per_unit' => $p1->price,
+            'subtotal' => $p1->price,
         ]);
 
-        // Skenario B: Order Cargo (Luar Negeri) - MENUNGGU QUOTE ADMIN
+        // Order 2: International (Menunggu Ongkir)
         $order2 = Order::create([
-            'user_id' => $customer->id,
-            'code' => 'ORD-2025-002',
+            'user_id' => $customer2->id,
+            'code' => 'ORD-INT-002',
             'shipping_name' => 'John Doe',
             'shipping_phone' => '+1 555 0199',
+            'shipping_email' => 'john@example.com',
             'shipping_address' => '123 Beverly Hills',
-            'shipping_city' => 'Los Angeles',
-            'shipping_province' => 'California',
             'shipping_country' => 'United States',
-            'shipping_method' => 'cargo_export', 
+            'shipping_province' => 'California',
+            'shipping_city' => 'Los Angeles',
+            'shipping_district' => '-',
+            'shipping_postal_code' => '90210',
+            'shipping_method' => 'Cargo (Pending Confirmation)',
             'total_weight_kg' => 45,
             'total_product_price' => 6000000,
-            'shipping_price' => 0,
-            'grand_total' => 6000000,
+            'shipping_price' => 0, 
+            'grand_total' => 6000000, 
             'order_status' => 'waiting_quote', 
             'payment_status' => 'unpaid',
         ]);
-
         OrderItem::create([
             'order_id' => $order2->id,
-            'product_id' => 2, 
-            'product_name' => 'Asgard Sofa 3 Seater',
+            'product_id' => $p3->id,
+            'product_name' => $p3->name,
             'quantity' => 1,
-            'price_per_unit' => 6000000,
-            'subtotal' => 6000000,
-        ]);
-
-        // REVIEW
-        Review::create([
-            'user_id' => $customer->id,
-            'product_id' => 1,
-            'order_id' => $order1->id,
-            'rating' => 5,
-            'comment' => 'Barang sangat bagus, kayu jatinya halus. Pengiriman di Mataram cepat.',
-            'is_approved' => true,
+            'price_per_unit' => $p3->price,
+            'subtotal' => $p3->price,
         ]);
     }
 }

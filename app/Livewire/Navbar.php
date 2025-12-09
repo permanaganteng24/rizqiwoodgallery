@@ -15,10 +15,10 @@ class Navbar extends Component
         $this->total_count = CartManagement::getCartItemsCount();
     }
 
-    #[On('cart-updated')] 
+    #[On('cart-updated')]
     public function updateCartCount($total_count)
     {
-        $this->total_count = $total_count;
+        $this->total_count = CartManagement::getCartItemsCount();
     }
 
     public function render()

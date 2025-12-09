@@ -11,8 +11,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Notifications\Notification;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 
 class OrderResource extends Resource
 {
@@ -22,7 +20,6 @@ class OrderResource extends Resource
     protected static ?string $navigationGroup = 'Shop Management';
     protected static ?int $navigationSort = 3;
     protected static ?string $navigationLabel = 'Orders';
-
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::where('order_status', 'waiting_quote')->count() ?: null;
@@ -39,11 +36,13 @@ class OrderResource extends Resource
                                 Forms\Components\TextInput::make('code')
                                     ->label('Order ID')
                                     ->disabled()
-                                    ->dehydrated(),
-                                
+                                    ->dehydrated()
+                                    ->columnSpanFull(),
+
                                 Forms\Components\Select::make('order_status')
                                     ->label('Status')
                                     ->options([
+                                        'new' => 'New Order',
                                         'waiting_quote' => 'Waiting Quote (Cargo)',
                                         'waiting_payment' => 'Waiting Payment',
                                         'processing' => 'Processing (Paid)',
@@ -52,10 +51,7 @@ class OrderResource extends Resource
                                         'cancelled' => 'Cancelled',
                                     ])
                                     ->required()
-                                    ->live()
-                                    ->afterStateUpdated(fn ($state, Set $set) => 
-                                        $state === 'processing' ? $set('paid_at', now()) : null
-                                    ),
+                                    ->default('new'),
 
                                 Forms\Components\Select::make('payment_status')
                                     ->options([
@@ -63,30 +59,32 @@ class OrderResource extends Resource
                                         'paid' => 'Paid',
                                         'failed' => 'Failed',
                                     ])
-                                    ->default('unpaid')
                                     ->required(),
 
-                                Forms\Components\Select::make('payment_method')
-                                    ->options([
-                                        'midtrans' => 'Midtrans Payment Gateway',
-                                    ])
-                                    ->default('midtrans')
+                                Forms\Components\TextInput::make('shipping_method')
+                                    ->label('Metode Pengiriman')
                                     ->disabled()
-                                    ->dehydrated(),
+                                    ->dehydrated()
+                                    ->columnSpanFull(),
+
                             ])->columns(2),
 
-                        Forms\Components\Section::make('Shipping Details')
+                        Forms\Components\Section::make('Customer Details')
                             ->schema([
-                                Forms\Components\TextInput::make('shipping_name')->required(),
-                                Forms\Components\TextInput::make('shipping_phone')->required(),
-                                Forms\Components\Textarea::make('shipping_address')->columnSpanFull()->required(),
-                                Forms\Components\TextInput::make('shipping_city')->required(),
-                                Forms\Components\TextInput::make('shipping_province')->required(),
-                                Forms\Components\TextInput::make('shipping_postal_code'),
-                                Forms\Components\TextInput::make('tracking_number')
-                                    ->label('Resi Pengiriman')
-                                    ->suffixIcon('heroicon-m-truck')
-                                    ->helperText('Input resi setelah barang dikirim via Cargo/Ekspedisi.'),
+                                Forms\Components\TextInput::make('shipping_name')->label('Nama Penerima')->required(),
+                                Forms\Components\TextInput::make('shipping_phone')->label('WhatsApp')->required(),
+                                Forms\Components\TextInput::make('shipping_email')->label('Email')->email(),
+                                Forms\Components\TextInput::make('company_name')->label('Perusahaan (Opsional)'),
+
+                                Forms\Components\Textarea::make('shipping_address')
+                                    ->label('Alamat Lengkap')
+                                    ->columnSpanFull()
+                                    ->required(),
+
+                                Forms\Components\TextInput::make('shipping_city')->label('Kota/Kab'),
+                                Forms\Components\TextInput::make('shipping_district')->label('Kecamatan'),
+                                Forms\Components\TextInput::make('shipping_province')->label('Provinsi'),
+                                Forms\Components\TextInput::make('shipping_postal_code')->label('Kode Pos'),
                             ])->columns(2),
                     ])->columnSpan(2),
 
@@ -98,48 +96,36 @@ class OrderResource extends Resource
                                     ->label('Subtotal Product')
                                     ->prefix('Rp')
                                     ->numeric()
-                                    ->default(0)
                                     ->disabled()
                                     ->dehydrated(),
 
                                 Forms\Components\TextInput::make('shipping_price')
-                                    ->label('Shipping Cost')
+                                    ->label('Biaya Ongkir (Real)')
                                     ->prefix('Rp')
                                     ->numeric()
-                                    ->default(0)
-                                    ->live(onBlur: true) 
-                                    ->afterStateUpdated(function ($state, Set $set, Get $get) {
-                                        $subtotal = (int) $get('total_product_price');
-                                        $ongkir = (int) $state;
-                                        $set('grand_total', $subtotal + $ongkir);
-                                    }),
+                                    ->default(0),
+
+                                Forms\Components\TextInput::make('discount_amount')
+                                    ->label('Diskon')
+                                    ->prefix('Rp')
+                                    ->numeric()
+                                    ->disabled()
+                                    ->dehydrated(),
 
                                 Forms\Components\TextInput::make('grand_total')
                                     ->label('Grand Total')
                                     ->prefix('Rp')
                                     ->numeric()
-                                    ->default(0)
                                     ->disabled()
                                     ->dehydrated(),
                             ]),
-                            
+
                         Forms\Components\Section::make('Admin Notes')
                             ->schema([
                                 Forms\Components\Textarea::make('notes')
-                                    ->label('Internal / Customer Notes')
-                                    ->placeholder('Catatan khusus untuk order ini...'),
+                                    ->label('Catatan Internal')
+                                    ->rows(3),
                             ]),
-
-                        Forms\Components\Section::make('Metadata')
-                            ->schema([
-                                Forms\Components\Placeholder::make('created_at')
-                                    ->label('Created at')
-                                    ->content(fn (Order $record): ?string => $record->created_at?->diffForHumans()),
-                                
-                                Forms\Components\Placeholder::make('updated_at')
-                                    ->label('Last Modified')
-                                    ->content(fn (Order $record): ?string => $record->updated_at?->diffForHumans()),
-                            ])
                     ])->columnSpan(1),
             ])->columns(3);
     }
@@ -149,6 +135,7 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('code')
+                    ->label('Order ID')
                     ->searchable()
                     ->sortable()
                     ->weight('bold')
@@ -161,7 +148,8 @@ class OrderResource extends Resource
 
                 Tables\Columns\TextColumn::make('grand_total')
                     ->money('IDR')
-                    ->sortable(),
+                    ->sortable()
+                    ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('payment_status')
                     ->badge()
@@ -174,12 +162,13 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('order_status')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
-                        'waiting_quote' => 'danger',    
-                        'waiting_payment' => 'warning', 
-                        'processing' => 'info',      
-                        'shipped' => 'primary',       
-                        'completed' => 'success',      
-                        'cancelled' => 'gray',         
+                        'waiting_quote' => 'danger',
+                        'waiting_payment' => 'warning',
+                        'processing' => 'info',
+                        'shipped' => 'success',
+                        'completed' => 'success',
+                        'cancelled' => 'gray',
+                        default => 'gray',
                     }),
             ])
             ->defaultSort('created_at', 'desc')
@@ -187,32 +176,31 @@ class OrderResource extends Resource
                 Tables\Actions\Action::make('input_ongkir')
                     ->label('Input Ongkir')
                     ->icon('heroicon-m-currency-dollar')
-                    ->color('warning')
-                    ->visible(fn (Order $record) => $record->order_status === 'waiting_quote')
+                    ->color('info')
+                    ->visible(fn(Order $record) => $record->order_status === 'waiting_quote')
                     ->form([
                         Forms\Components\TextInput::make('shipping_price')
-                            ->label('Biaya Ongkir Cargo (Rp)')
-                            ->numeric()
+                            ->label('Biaya Ongkir Real (Rp)')
                             ->required()
-                            ->prefix('Rp')
-                            ->helperText('Masukkan nominal ongkir real dari ekspedisi.'),
-                        
+                            ->numeric()
+                            ->prefix('Rp'),
                         Forms\Components\Textarea::make('notes')
-                            ->label('Pesan untuk Customer')
-                            ->placeholder('Contoh: Pengiriman menggunakan Dakota Cargo, estimasi 7 hari.'),
+                            ->label('Catatan untuk Customer')
+                            ->default('Ongkir sudah dihitung, silakan lakukan pembayaran.'),
                     ])
                     ->action(function (Order $record, array $data) {
-                        // Update Data
+                        $newGrandTotal = $record->total_product_price + $data['shipping_price'] - $record->discount_amount;
+
                         $record->update([
                             'shipping_price' => $data['shipping_price'],
-                            'grand_total' => $record->total_product_price + $data['shipping_price'],
+                            'grand_total' => $newGrandTotal,
                             'order_status' => 'waiting_payment',
-                            'notes' => $data['notes'],
+                            'notes' => $data['notes']
                         ]);
-                        
+
                         Notification::make()
-                            ->title('Ongkir Disimpan & Status Updated')
-                            ->body('Order sekarang berstatus Waiting Payment. Customer bisa melanjutkan pembayaran.')
+                            ->title('Ongkir Disimpan')
+                            ->body('Status order berubah menjadi Waiting Payment.')
                             ->success()
                             ->send();
                     }),
@@ -221,7 +209,7 @@ class OrderResource extends Resource
                     ->label('Kirim Resi')
                     ->icon('heroicon-m-truck')
                     ->color('primary')
-                    ->visible(fn (Order $record) => in_array($record->order_status, ['processing', 'shipped']))
+                    ->visible(fn(Order $record) => in_array($record->order_status, ['processing', 'shipped']))
                     ->form([
                         Forms\Components\TextInput::make('tracking_number')
                             ->label('Nomor Resi')
@@ -236,11 +224,12 @@ class OrderResource extends Resource
                             'shipping_courier' => $data['shipping_courier'],
                             'order_status' => 'shipped',
                         ]);
-                        
+
                         Notification::make()->title('Resi Berhasil Diupdate')->success()->send();
                     }),
 
                 Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
             ]);
     }
 

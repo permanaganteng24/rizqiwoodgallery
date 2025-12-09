@@ -20,7 +20,7 @@
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
                 <a href="/products"
-                    class="px-8 py-3 bg-amber-700 hover:bg-amber-800 text-white font-medium rounded shadow-lg transition duration-300">
+                    class="px-10 py-3 bg-[#6B4226] hover:bg-[#5D3A20 text-white font-medium rounded shadow-lg transition duration-300">
                     Shop Now
                 </a>
                 <a href="#story"
@@ -39,9 +39,9 @@
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <input wire:model.live.debounce.300ms="search" type="text" placeholder="Search Product..."
-                    class="flex-grow px-4 py-3 outline-none text-gray-600 placeholder-gray-400 bg-transparent">
+                    class="flex-grow px-4 py-3 outline-none  rounded-2xl text-gray-600 placeholder-gray-400 bg-transparent">
                 <button
-                    class="bg-amber-800 hover:bg-amber-900 text-white px-8 py-3 rounded transition font-medium hidden sm:block">
+                    class="bg-[#6B4226] hover:bg-[#5D3A20] text-white px-12 py-3 rounded-md transition font-medium hidden sm:block">
                     Search
                 </button>
             </div>
