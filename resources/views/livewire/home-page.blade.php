@@ -20,7 +20,7 @@
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
                 <a href="/products"
-                    class="px-10 py-3 bg-[#6B4226] hover:bg-[#5D3A20 text-white font-medium rounded shadow-lg transition duration-300">
+                    class="px-10 py-3 bg-[#6B4226] hover:bg-[#5D3A20] text-white font-medium rounded shadow-lg transition duration-300">
                     Shop Now
                 </a>
                 <a href="#story"
@@ -159,7 +159,7 @@
                     <p class="text-gray-500 mb-8">Our designer already made a lot of beautiful prototype of rooms that
                         inspire you.</p>
                     <a href="/products?sort=newest"
-                        class="inline-block px-8 py-3 bg-amber-800 text-white font-medium rounded hover:bg-amber-900 transition shadow-md">
+                        class="inline-block px-8 py-3 bg-[#6B4226] hover:bg-[#5D3A20] text-white font-medium rounded  transition shadow-md">
                         Explore Now
                     </a>
                 </div>

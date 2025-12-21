@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InvoiceController;
 use App\Livewire\AboutPage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,8 @@ Route::middleware('auth')->group(function () {
     // Riwayat Pesanan
     Route::get('/my-orders', MyOrdersPage::class)->name('my-orders');
     Route::get('/my-orders/{order_id}', MyOrderDetailPage::class)->name('my-orders.show');
+
+    Route::get('/invoice/{order_id}', [InvoiceController::class, 'download'])->name('invoice.download');
 
     // Logout 
     Route::post('/logout', function () {

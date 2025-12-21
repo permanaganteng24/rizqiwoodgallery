@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Notifications\Notification;
+use Filament\Tables\Actions\Action;
 
 class OrderResource extends Resource
 {
@@ -227,6 +228,12 @@ class OrderResource extends Resource
 
                         Notification::make()->title('Resi Berhasil Diupdate')->success()->send();
                     }),
+                Action::make('pdf')
+                    ->label('Invoice')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('info')
+                    ->url(fn(Order $record) => route('invoice.download', $record))
+                    ->openUrlInNewTab(),
 
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
