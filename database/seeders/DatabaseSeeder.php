@@ -17,6 +17,11 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+
+        $this->call([
+        \Laravolt\Indonesia\Seeds\DatabaseSeeder::class,
+    ]);
+
         // SEED USERS -----
         $admin = User::create([
             'name' => 'Super Admin',
