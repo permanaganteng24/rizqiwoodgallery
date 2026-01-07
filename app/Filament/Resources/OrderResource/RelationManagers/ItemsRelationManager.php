@@ -32,8 +32,10 @@ class ItemsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\ImageColumn::make('product.galleries.image_url')
                     ->label('Foto')
-                    ->simpleLightbox()
-                    ->defaultImageUrl(url('/images/placeholder.png')), 
+                    ->circular() 
+                    ->stacked() 
+                    ->limit(1) 
+                    ->defaultImageUrl(url('/assets/image/no-image.png')), 
                     
                 Tables\Columns\TextColumn::make('product_name')
                     ->label('Nama Produk')

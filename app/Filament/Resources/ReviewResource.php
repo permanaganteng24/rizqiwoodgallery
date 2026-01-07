@@ -103,9 +103,16 @@ class ReviewResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
-                    ->date()
+                    ->date('d M Y, H:i') 
                     ->sortable()
                     ->label('Date'),
+
+                Tables\Columns\ImageColumn::make('images.image_url')
+                    ->label('Photos')
+                    ->circular()
+                    ->stacked()
+                    ->limit(3)  
+                    ->limitedRemainingText(),
 
                 Tables\Columns\TextColumn::make('user.name')
                     ->searchable()
@@ -118,7 +125,6 @@ class ReviewResource extends Resource
                     ->limit(30)
                     ->label('Product'),
 
-                // Menampilkan Bintang Rating
                 Tables\Columns\TextColumn::make('rating')
                     ->label('Rating')
                     ->formatStateUsing(fn (string $state): string => str_repeat('⭐', $state))
@@ -160,5 +166,11 @@ class ReviewResource extends Resource
             'index' => Pages\ListReviews::route('/'),
             'edit' => Pages\EditReview::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with(['user', 'product']); 
     }
 }

@@ -12,6 +12,10 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\Action;
+use Illuminate\Database\Eloquent\Builder;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Blade;
 
 class OrderResource extends Resource
 {
@@ -237,6 +241,24 @@ class OrderResource extends Resource
 
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                    
+                    Tables\Actions\BulkAction::make('export_pdf')
+                        ->label('Export PDF')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->openUrlInNewTab()
+                        ->deselectRecordsAfterCompletion()
+                        ->action(function (Collection $records) {
+                            return response()->streamDownload(function () use ($records) {
+                                echo Pdf::loadHtml(
+                                    Blade::render('pdf.orders', ['orders' => $records])
+                                )->stream();
+                            }, 'rekap-penjualan-' . date('Y-m-d') . '.pdf');
+                        }),
+                ]),
             ]);
     }
 
@@ -254,5 +276,11 @@ class OrderResource extends Resource
             'create' => Pages\CreateOrder::route('/create'),
             'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with(['items']); 
     }
 }
