@@ -15,7 +15,7 @@
 
     <!-- Status Banner -->
     <div class="mb-6">
-        @if($order->order_status == 'waiting_quote')
+        @if ($order->order_status == 'waiting_quote')
             <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-4 items-start shadow-sm">
                 <div class="bg-amber-100 rounded-full p-2 text-amber-600 shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -33,7 +33,6 @@
                     </p>
                 </div>
             </div>
-
         @elseif($order->order_status == 'waiting_payment')
             <div class="bg-green-50 border border-green-200 rounded-xl p-4 flex gap-4 items-start shadow-sm">
                 <div class="bg-green-100 rounded-full p-2 text-green-600 shrink-0">
@@ -50,9 +49,10 @@
                     </p>
                 </div>
 
-                <button
-                    class="bg-green-700 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-800 transition shadow-md whitespace-nowrap">
-                    Pay Now
+                <button wire:click="payNow" wire:loading.attr="disabled"
+                    class="bg-green-700 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-800 transition shadow-md whitespace-nowrap disabled:opacity-50">
+                    <span wire:loading.remove wire:target="payNow">Pay Now</span>
+                    <span wire:loading wire:target="payNow">Loading...</span>
                 </button>
             </div>
         @endif
@@ -138,12 +138,31 @@
                     <!-- Order Status -->
                     <div class="flex justify-between items-center pb-4 border-b border-gray-100">
                         <span class="text-gray-500 font-medium">Order Status</span>
-                        <span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-bold uppercase tracking-wide
+                        <span
+                            class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-bold tracking-wide
                             {{ $order->order_status == 'waiting_quote' ? 'bg-gray-100 text-gray-600' : '' }}
                             {{ $order->order_status == 'waiting_payment' ? 'bg-amber-100 text-amber-700' : '' }}
-                            {{ $order->order_status == 'new' ? 'bg-blue-100 text-blue-700' : '' }}
+                            {{ $order->order_status == 'processing' ? 'bg-blue-100 text-blue-700' : '' }}
+                            {{ $order->order_status == 'shipped' ? 'bg-purple-100 text-purple-700' : '' }}
+                            {{ $order->order_status == 'completed' ? 'bg-green-100 text-green-700' : '' }}
                         ">
-                            {{ str_replace('_', ' ', ucfirst($order->order_status)) }}
+                            @if ($order->order_status == 'waiting_quote')
+                                Awaiting Quote
+                            @elseif($order->order_status == 'waiting_payment')
+                                Awaiting Payment
+                            @elseif($order->order_status == 'processing')
+                                Processing
+                            @elseif($order->order_status == 'shipped')
+                                Shipped
+                            @elseif($order->order_status == 'completed')
+                                Completed
+                            @elseif($order->order_status == 'cancelled')
+                                Cancelled
+                            @elseif($order->order_status == 'new')
+                                New Order
+                            @else
+                                {{ str_replace('_', ' ', ucfirst($order->order_status)) }}
+                            @endif
                         </span>
                     </div>
 
@@ -154,7 +173,7 @@
                             <span>Rp {{ number_format($order->total_product_price, 0, ',', '.') }}</span>
                         </div>
 
-                        @if($order->discount_amount > 0)
+                        @if ($order->discount_amount > 0)
                             <div class="flex justify-between text-green-600">
                                 <span>Discount</span>
                                 <span>- Rp {{ number_format($order->discount_amount, 0, ',', '.') }}</span>
@@ -164,12 +183,11 @@
                         <div class="flex justify-between text-gray-600">
                             <span>Shipping</span>
 
-                            @if($order->shipping_price == 0 && $order->order_status == 'waiting_quote')
-                                <span class="text-xs bg-gray-200 px-2 py-1 rounded text-gray-600 font-medium">Pending</span>
-
+                            @if ($order->shipping_price == 0 && $order->order_status == 'waiting_quote')
+                                <span
+                                    class="text-xs bg-gray-200 px-2 py-1 rounded text-gray-600 font-medium">Pending</span>
                             @elseif($order->shipping_price == 0)
                                 <span class="font-bold">Free</span>
-
                             @else
                                 <span>Rp {{ number_format($order->shipping_price, 0, ',', '.') }}</span>
                             @endif
@@ -188,14 +206,14 @@
                     <!-- Download Invoice Button -->
                     <div class="flex gap-4 mt-4 justify-end">
 
-                        @if($order->payment_status == 'unpaid')
+                        @if ($order->payment_status == 'unpaid')
                             {{-- Tombol Bayar --}}
                         @endif
 
                         <a href="{{ route('invoice.download', $order->id) }}" target="_blank"
                             class="bg-[#6B4226] hover:bg-[#5D3A20] text-white px-6 py-2 rounded-lg flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-printer" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
                                 <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
                                 <path
                                     d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
@@ -208,4 +226,32 @@
         </div>
 
     </div>
+
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
+    </script>
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.on('show-snap-popup', (event) => {
+                snap.pay(event.token, {
+                    onSuccess: function(result) {
+                        // Jika berhasil, kirim sinyal ke Livewire
+                        Livewire.dispatch('payment-success', {
+                            data: result
+                        });
+                    },
+                    onPending: function(result) {
+                        alert(
+                            "Waiting for payment! Please save your Virtual Account number.."
+                            );
+                    },
+                    onError: function(result) {
+                        alert("Payment failed or expired!");
+                    },
+                    onClose: function() {
+                        alert('You closed the popup before completing the payment.');
+                    }
+                });
+            });
+        });
+    </script>
 </div>

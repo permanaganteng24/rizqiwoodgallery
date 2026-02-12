@@ -34,10 +34,10 @@
         </div>
 
         <div class="mt-8 space-y-3">
-            
-            @if($order->order_status == 'waiting_payment')
-                <button id="pay-button" class="w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-lg border border-transparent font-bold bg-[#6B4226] text-white hover:bg-[#5D3A20] focus:outline-none transition shadow-lg">
-                    Bayar Sekarang (Midtrans)
+            @if(in_array($order->order_status, ['new', 'waiting_payment']))
+                <button wire:click="payNow" wire:loading.attr="disabled" class="w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-lg border border-transparent font-bold bg-[#6B4226] text-white hover:bg-[#5D3A20] focus:outline-none transition shadow-lg disabled:opacity-50">
+                    <span wire:loading.remove wire:target="payNow">Pay Now</span>
+                    <span wire:loading wire:target="payNow">Loading...</span>
                 </button>
             @elseif($order->order_status == 'waiting_quote')
                 <a href="https://wa.me/6281234567890?text=Halo Admin, saya mau tanya status order {{ $order->code }}" target="_blank" class="w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-lg border border-green-600 font-bold text-green-700 hover:bg-green-50 focus:outline-none transition">
@@ -51,4 +51,31 @@
             </a>
         </div>
     </div>
+
+    <!-- SCRIPT MIDTRANS -->
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.on('show-snap-popup', (event) => {
+                snap.pay(event.token, {
+                    onSuccess: function(result) {
+                        Livewire.dispatch('payment-success', { data: result });
+                    },
+                    onPending: function(result) {
+                        alert("Waiting for payment! Please save your Virtual Account number.");
+                    },
+                    onError: function(result) {
+                        alert("Payment failed or expired!");
+                    },
+                    onClose: function() {
+                        alert('You closed the popup before completing the payment.');
+                    }
+                });
+            });
+
+            Livewire.on('midtrans-error', (event) => {
+                alert("GAGAL KE MIDTRANS!\n\nAlasan: " + event.message);
+            });
+        });
+    </script>
 </div>
