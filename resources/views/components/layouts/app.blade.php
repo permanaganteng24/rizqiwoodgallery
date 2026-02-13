@@ -27,7 +27,7 @@
                 <!-- Brand Section -->
                 <div class="lg:col-span-1">
                     <div class="flex items-center gap-2 mb-4">
-                        <img src="{{ asset('assets/image/logo.svg') }}" alt="Rizqi Wood Gallery" class="h-16 w-auto">
+                        <img src="{{ asset('assets/image/logo-big.png') }}" alt="Rizqi Wood Gallery" class="h-16 w-auto">
                     </div>
                     <p class="text-gray-600 text-sm leading-relaxed">
                         Curating timeless wood artistry from NTB for the world's finest interiors.

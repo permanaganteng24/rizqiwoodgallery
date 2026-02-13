@@ -3,7 +3,7 @@
         <div class="flex justify-between h-16 items-center">
 
             <a href="/" class="flex-shrink-0 flex items-center">
-                <img src="{{ asset('assets/image/logo.svg') }}" alt="Rizqi Wood Logo" class="h-9 w-auto">
+                <img src="{{ asset('assets/image/logo-big.png') }}" alt="Rizqi Wood Logo" class="h-9 w-auto">
             </a>
 
             <div class="hidden md:flex space-x-8">
