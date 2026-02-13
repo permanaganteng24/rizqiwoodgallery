@@ -1,5 +1,18 @@
 <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto bg-stone-50 min-h-screen">
 
+    {{-- Notifikasi Flash Message --}}
+    @if (session()->has('success'))
+        <div class="mb-4 bg-green-50 border border-green-200 text-green-800 rounded-lg p-4 flex items-center gap-2"
+            role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd" />
+            </svg>
+            <span class="font-medium">{{ session('success') }}</span>
+        </div>
+    @endif
+
     <!-- Breadcrumb & Title -->
     <div class="flex items-center gap-2 mb-6">
         <a href="/my-orders" class="text-gray-500 hover:text-amber-800 flex items-center gap-1 transition">
@@ -203,6 +216,41 @@
                         <p class="text-xs text-gray-400 text-right mt-1">Tax included</p>
                     </div>
 
+                    {{-- LOGIKA TOMBOL REVIEW --}}
+                    @if ($order->order_status == 'completed' || $order->order_status == 'shipped')
+                        @php
+                            $hasReviewed = \App\Models\Review::where('user_id', auth()->id())
+                                ->where('product_id', $item->product_id)
+                                ->where('order_id', $order->id)
+                                ->exists();
+                        @endphp
+
+                        <div class="mt-2 flex justify-end">
+                            @if (!$hasReviewed)
+                                <button 
+                                    wire:click="$dispatch('open-review-modal', { product_id: {{ $item->product_id }}, order_id: {{ $order->id }}, product_name: '{{ $item->product_name }}' })"
+                                    class="text-xs bg-amber-100 text-amber-800 px-3 py-1.5 rounded-full font-medium hover:bg-amber-200 transition flex items-center gap-1 cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path
+                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    Tulis Ulasan
+                                </button>
+                            @else
+                                <span
+                                    class="text-xs text-green-600 font-medium bg-green-50 px-2 py-1 rounded border border-green-100 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Sudah Diulas
+                                </span>
+                            @endif
+                        </div>
+                    @endif
+
                     <!-- Download Invoice Button -->
                     <div class="flex gap-4 mt-4 justify-end">
 
@@ -226,6 +274,7 @@
         </div>
 
     </div>
+<<<<<<< HEAD
 
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
     </script>
@@ -255,3 +304,8 @@
         });
     </script>
 </div>
+=======
+</div>
+{{-- Komponen Modal Review --}}
+<livewire:review-modal />
+>>>>>>> 4bbd232f62edd6cab5f57826bae5406ef723f458

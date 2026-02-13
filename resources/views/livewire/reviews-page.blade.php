@@ -1,6 +1,6 @@
 <div class="bg-white font-sans text-gray-700 min-h-screen">
 
-    <div class="bg-gray-50 border-b border-gray-100 py-16 text-center" >
+    <div class="bg-gray-50 border-b border-gray-100 py-16 text-center">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Loved by Locals, Trusted Globally
             </h1>
@@ -76,9 +76,15 @@
                     </div>
 
                     @if ($review->images->count() > 0)
-                        <div class="mb-4 rounded-xl overflow-hidden aspect-video relative group">
-                            <img src="{{ asset('storage/' . $review->images->first()->image_url) }}"
-                                class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                        <div class="mb-4 flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x">
+                            @foreach ($review->images as $image)
+                                <div
+                                    class="flex-shrink-0 w-full rounded-xl overflow-hidden aspect-video relative group snap-center">
+                                    <img src="{{ asset('storage/' . $image->image_url) }}"
+                                        class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500"
+                                        loading="lazy">
+                                </div>
+                            @endforeach
                         </div>
                     @endif
 

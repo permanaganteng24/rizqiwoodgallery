@@ -164,7 +164,7 @@ class DatabaseSeeder extends Seeder
         $order1 = Order::create([
             'user_id' => $customer1->id,
             'code' => 'ORD-LOC-001',
-            'shipping_name' => 'Permana Customer',
+            'shipping_name' => 'Ijat Pulu Pulu',
             'shipping_phone' => '08123456789',
             'shipping_email' => 'permana@gmail.com',
             'shipping_address' => 'Jl. Majapahit No 10',
