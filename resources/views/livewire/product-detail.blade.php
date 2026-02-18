@@ -87,10 +87,11 @@
                             class="w-full bg-gray-300 text-gray-500 font-bold py-3.5 px-8 rounded cursor-not-allowed">Stock
                             Not Available</button>
                     @endif
-                    <button
+                    <a href="https://wa.me/6281945591108?text={{ urlencode('Hello Admin, I would like to inquire about a custom order for ' . $product->name . '. Could you please assist me?') }}"
+                        target="_blank"
                         class="w-full border-2 border-[#6B4226] text-[#6B4226] font-bold py-3 px-8 rounded hover:bg-[#6B4226] hover:text-white transition flex items-center justify-center gap-2">
-                        <x-heroicon-o-chat-bubble-left-ellipsis class="w-5 h-5" /> Custom
-                    </button>
+                        <x-heroicon-o-chat-bubble-left-ellipsis class="w-5 h-5" /> Request Custom Order
+                    </a>
                 </div>
             </div>
         </div>
@@ -226,7 +227,7 @@
                     </div>
                 @empty
                     <div class="text-center py-8">
-                        <p class="text-gray-500">Belum ada review untuk produk ini.</p>
+                        <p class="text-gray-500">No reviews yet for this product.</p>
                     </div>
                 @endforelse
             </div>

@@ -274,7 +274,6 @@
         </div>
 
     </div>
-<<<<<<< HEAD
 
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
     </script>
@@ -304,8 +303,3 @@
         });
     </script>
 </div>
-=======
-</div>
-{{-- Komponen Modal Review --}}
-<livewire:review-modal />
->>>>>>> 4bbd232f62edd6cab5f57826bae5406ef723f458
