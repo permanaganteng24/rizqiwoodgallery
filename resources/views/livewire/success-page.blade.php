@@ -53,7 +53,7 @@
     </div>
 
     <!-- SCRIPT MIDTRANS -->
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
     <script>
         document.addEventListener('livewire:initialized', () => {
             Livewire.on('show-snap-popup', (event) => {
