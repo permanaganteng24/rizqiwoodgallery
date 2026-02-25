@@ -18,7 +18,6 @@ class MyOrderDetailPage extends Component
     public $order_id;
     public $snapToken;
 
-    // Function pay now 
     public function payNow()
     {
         $order = \App\Models\Order::find($this->order_id);
@@ -28,7 +27,6 @@ class MyOrderDetailPage extends Component
             return;
         }
 
-        // SET CONFIG MIDTRANS
         Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
         Config::$isSanitized = env('MIDTRANS_IS_SANITIZED', true);
@@ -50,6 +48,10 @@ class MyOrderDetailPage extends Component
                 'email' => $order->shipping_email ?? 'customer@example.com',
                 'phone' => $order->shipping_phone ?? '08123456789',
             ],
+            'enabled_payments' => [
+                'bank_transfer',
+                'echannel',
+            ],
         ];
 
         try {
@@ -61,7 +63,6 @@ class MyOrderDetailPage extends Component
         }
     }
 
-    // FUNGSI SUKSES PEMBAYARAN
     #[On('payment-success')]
     public function handlePaymentSuccess($data)
     {
