@@ -48,10 +48,6 @@ class MyOrderDetailPage extends Component
                 'email' => $order->shipping_email ?? 'customer@example.com',
                 'phone' => $order->shipping_phone ?? '08123456789',
             ],
-            'enabled_payments' => [
-                'bank_transfer',
-                'echannel',
-            ],
         ];
 
         try {
