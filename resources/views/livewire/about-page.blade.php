@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
         <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">About Us</h1>
         <p class="text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            We display products based on the latest designs we have. Since 2015, Rizqi Wood Gallery has been dedicated to bringing the timeless beauty of Lombok's finest teak wood into homes across the globe.
+            We display products based on the latest designs we have. Since 2014, Rizqi Wood Gallery has been dedicated to bringing the timeless beauty of Lombok's finest teak wood into homes across the globe.
         </p>
         
         <div class="mt-12 rounded-2xl overflow-hidden shadow-lg h-[400px] relative">

@@ -147,6 +147,9 @@
                 <td width="40%" style="vertical-align: middle;">
                     <div class="report-title">SALES RECAP</div>
                     <div class="report-subtitle">Generated on: {{ date('d M Y, H:i') }}</div>
+                    @if(!empty($startDate) && !empty($endDate))
+                    <div class="report-subtitle">Period: {{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} &mdash; {{ \Carbon\Carbon::parse($endDate)->format('d M Y') }}</div>
+                    @endif
                     <div class="report-subtitle">Total Orders: {{ count($orders) }}</div>
                 </td>
             </tr>

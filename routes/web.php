@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\InvoiceController;
 use App\Livewire\AboutPage;
+use App\Livewire\HowToOrderPage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,7 @@ Route::get('/cart', CartPage::class)->name('cart');
 Route::get('/about', AboutPage::class)->name('about');
 Route::get('/contact', ContactPage::class)->name('contact');
 Route::get('/reviews', ReviewsPage::class)->name('reviews');
+Route::get('/how-to-order', HowToOrderPage::class)->name('how-to-order');
 
 // GUEST ROUTES 
 Route::middleware('guest')->group(function () {
