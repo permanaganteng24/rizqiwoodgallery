@@ -238,7 +238,7 @@
         <h2 class="text-3xl font-serif font-bold text-gray-900 text-center mb-12">Related Products</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             @foreach ($relatedProducts as $related)
-                <div class="group cursor-pointer">
+                <a href="{{ route('products.show', $related->slug) }}" class="group cursor-pointer block">
                     <div class="relative bg-gray-100 rounded-2xl overflow-hidden aspect-[4/5] mb-4">
                         @php $img = $related->galleries->first(); @endphp
                         <img src="{{ $img ? asset('storage/' . $img->image_url) : 'https://via.placeholder.com/300' }}"
@@ -247,16 +247,15 @@
                     <div>
                         <p class="text-xs text-gray-500 mb-1">Furniture</p>
                         <h3 class="font-bold text-gray-900 text-lg group-hover:text-amber-800 transition">
-                            <a href="/products/{{ $related->slug }}">{{ $related->name }}</a>
+                            {{ $related->name }}
                         </h3>
                         <div class="flex items-center gap-2 mt-1">
                             <x-heroicon-s-star class="w-4 h-4 text-yellow-400" />
                             <span class="text-sm font-bold text-gray-900">4.5</span>
                         </div>
-                        <p class="font-bold text-gray-900 mt-2">Rp {{ number_format($related->price, 0, ',', '.') }}
-                        </p>
+                        <p class="font-bold text-gray-900 mt-2">Rp {{ number_format($related->price, 0, ',', '.') }}</p>
                     </div>
-                </div>
+                </a>
             @endforeach
         </div>
         <div class="text-center mt-12">

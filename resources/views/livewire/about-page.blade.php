@@ -78,68 +78,6 @@
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-gray-100">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
-            <div>
-                <p class="text-amber-800 font-bold uppercase text-xs tracking-widest mb-2">Our Team</p>
-                <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900">Meet our leading and strong team</h2>
-            </div>
-            <div class="flex items-end">
-                <p class="text-gray-500 text-sm max-w-md">The passionate people behind every curve and joint of your furniture.</p>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="group">
-                <div class="aspect-[4/5] bg-gray-200 rounded-lg overflow-hidden mb-4">
-                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                </div>
-                <h3 class="font-bold text-lg text-gray-900">Jesse Depp</h3>
-                <p class="text-sm text-gray-500">Founder & CEO</p>
-            </div>
-
-            <div class="group">
-                <div class="aspect-[4/5] bg-gray-200 rounded-lg overflow-hidden mb-4">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                </div>
-                <h3 class="font-bold text-lg text-gray-900">Margareth Carter</h3>
-                <p class="text-sm text-gray-500">Head of Craftsmanship</p>
-            </div>
-
-            <div class="group">
-                <div class="aspect-[4/5] bg-gray-200 rounded-lg overflow-hidden mb-4">
-                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                </div>
-                <h3 class="font-bold text-lg text-gray-900">Andrew Taggart</h3>
-                <p class="text-sm text-gray-500">International Sales</p>
-            </div>
-
-            <div class="group">
-                <div class="aspect-[4/5] bg-gray-200 rounded-lg overflow-hidden mb-4">
-                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                </div>
-                <h3 class="font-bold text-lg text-gray-900">Grace Marie</h3>
-                <p class="text-sm text-gray-500">Manager</p>
-            </div>
-
-            <div class="group">
-                <div class="aspect-[4/5] bg-gray-200 rounded-lg overflow-hidden mb-4">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                </div>
-                <h3 class="font-bold text-lg text-gray-900">Jesse Depp</h3>
-                <p class="text-sm text-gray-500">Senior Designer</p>
-            </div>
-
-            <div class="group">
-                <div class="aspect-[4/5] bg-gray-200 rounded-lg overflow-hidden mb-4">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                </div>
-                <h3 class="font-bold text-lg text-gray-900">Marketer</h3>
-                <p class="text-sm text-gray-500">Marketer</p>
-            </div>
-        </div>
-    </div>
-
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div class="bg-stone-50 border border-stone-100 rounded-2xl p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8">
             <div class="max-w-2xl">

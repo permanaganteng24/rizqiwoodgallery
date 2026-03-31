@@ -56,6 +56,8 @@ class ProductResource extends Resource
                                         Forms\Components\FileUpload::make('image_url')
                                             ->label('Image')
                                             ->image()
+                                            ->disk('public')
+                                            ->visibility('public')
                                             ->directory('products')
                                             ->required(),
                                             
@@ -135,16 +137,20 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('galleries.image_url')
+                Tables\Columns\ImageColumn::make('thumbnail')
                     ->label('Thumbnail')
-                    ->stacked()
-                    ->limit(1),
+                    ->disk('public')
+                    ->width(64)
+                    ->height(64)
+                    ->extraImgAttributes(['style' => 'object-fit:cover;border-radius:6px;'])
+                    ->getStateUsing(fn (Product $record): ?string => $record->galleries->firstWhere('is_thumbnail', true)?->image_url
+                        ?? $record->galleries->first()?->image_url),
 
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable()
                     ->weight('bold')
-                    ->description(fn (Product $record): string => Str::limit($record->description ?? '', 30)),
+                    ->description(fn (Product $record): string => Str::limit(strip_tags($record->description ?? ''), 50)),
 
                 Tables\Columns\TextColumn::make('price')
                     ->money('IDR')
