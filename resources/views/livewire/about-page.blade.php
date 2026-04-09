@@ -1,94 +1,188 @@
-<div class="bg-white font-sans text-gray-700">
+<div class="bg-white font-sans text-gray-900 antialiased">
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-        <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">About Us</h1>
-        <p class="text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            We display products based on the latest designs we have. Since 2014, Rizqi Wood Gallery has been dedicated to bringing the timeless beauty of Lombok's finest teak wood into homes across the globe.
-        </p>
-        
-        <div class="mt-12 rounded-2xl overflow-hidden shadow-lg h-[400px] relative">
-            <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=2000&auto=format&fit=crop" 
-                 alt="Team working" 
-                 class="w-full h-full object-cover object-center">
+    {{-- ── 1. HERO · WHO & WHEN ──────────────────────────────────────────── --}}
+    <section class="bg-white pt-24 pb-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+                <div class="order-2 lg:order-1">
+                    <span class="block text-[10px] font-bold tracking-[0.45em] uppercase text-amber-700 mb-8">Est. 2014 · Lombok, Indonesia</span>
+                    <h1 class="text-6xl sm:text-7xl lg:text-8xl font-serif font-bold text-gray-900 leading-[0.95] tracking-tight mb-10">
+                        The<br>RWG<br>Heritage.
+                    </h1>
+                    <div class="max-w-md space-y-5 text-gray-500 leading-loose border-t border-stone-100 pt-8">
+                        <p>Rizqi Wood Gallery is not a factory. We are a collective of master artisans — inheritors of a woodworking tradition rooted in the islands of Nusa Tenggara — founded in 2014 with a singular purpose.</p>
+                        <p>To bring the living soul of Indonesian timber into the world's most discerning interiors. Not manufactured. Practiced.</p>
+                    </div>
+                </div>
+
+                <div class="order-1 lg:order-2">
+                    <div class="relative w-full" style="height: 520px;">
+
+                        {{-- Image 1 — Background layer (top-right) --}}
+                        <div class="absolute top-0 right-0 w-3/4 aspect-[4/5] overflow-hidden bg-stone-100 shadow-2xl z-10">
+                            <img src="{{ asset('assets/image/teakroot.jpg') }}"
+                                 alt="Premium certified teak timber — raw material"
+                                 class="w-full h-full object-cover">
+                        </div>
+
+                        {{-- Image 2 — Middle layer (bottom-left, overlapping) --}}
+                        <div class="absolute bottom-0 left-0 lg:-bottom-12 lg:-left-10 w-3/6 aspect-[4/5] overflow-hidden bg-stone-200 shadow-2xl z-20">
+                            <img src="{{ asset('assets/image/bedroom.jpg') }}"
+                                 alt="RWG bedroom suite — finished teak craftsmanship"
+                                 class="w-full h-full object-cover">
+                        </div>
+
+                        {{-- Stat box — Foreground --}}
+                        <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:-bottom-6 lg:right-2 bg-white border border-stone-100 px-4 py-3 shadow-xl z-30 whitespace-nowrap">
+                            <span class="block text-3xl font-serif font-bold text-gray-900">100%</span>
+                            <span class="block text-[10px] uppercase tracking-widest text-gray-400 mt-1">Certified Solid Teak · Every Piece</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
-            
-            <div>
-                <p class="text-amber-800 font-bold uppercase text-xs tracking-widest mb-2">Our Mission</p>
-                <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-8 leading-tight">
-                    Dedicated to crafting timeless wood artistry.
-                </h2>
-                
-                <div class="flex gap-12 mt-8">
-                    <div>
-                        <span class="block text-3xl font-bold text-gray-900">10+</span>
-                        <span class="text-xs text-gray-500 uppercase tracking-wide">Years Experience</span>
+
+    {{-- ── ROOTED IN LOMBOK · WHERE & WHAT ───────────────────────────── --}}
+    <section class="bg-stone-50 border-y border-stone-100 py-28 lg:py-36">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-[1fr_auto_1fr] gap-16 lg:gap-20 items-start">
+
+                <div class="pt-4 lg:pt-20">
+                    <span class="block text-[10px] font-bold tracking-[0.45em] uppercase text-amber-700 mb-6">Origin · 01</span>
+                    <h2 class="text-4xl sm:text-5xl font-serif font-bold text-gray-900 leading-[1.1] tracking-tight mb-8">
+                        Rooted<br>in Lombok.
+                    </h2>
+                    <div class="space-y-5 text-gray-500 leading-loose max-w-sm">
+                        <p>Our story begins in Lombok, West Nusa Tenggara — an island whose forests have long produced some of the world's most coveted teak. Far from the noise of mass production, this is where RWG took root.</p>
+                        <p>From this island, we craft bespoke, premium solid teak furniture for the global connoisseur. Each commission begins with a conversation and concludes only when the piece inhabits its rightful place.</p>
                     </div>
-                    <div>
-                        <span class="block text-3xl font-bold text-gray-900">700+</span>
-                        <span class="text-xs text-gray-500 uppercase tracking-wide">Happy Client</span>
+                    <div class="flex gap-10 mt-12 pt-10 border-t border-stone-200">
+                        <div>
+                            <span class="block text-3xl font-serif font-bold text-gray-900">10+</span>
+                            <span class="text-[10px] uppercase tracking-widest text-gray-400 mt-1 block">Years</span>
+                        </div>
+                        <div>
+                            <span class="block text-3xl font-serif font-bold text-gray-900">700+</span>
+                            <span class="text-[10px] uppercase tracking-widest text-gray-400 mt-1 block">Pieces</span>
+                        </div>
+                        <div>
+                            <span class="block text-3xl font-serif font-bold text-gray-900">10+</span>
+                            <span class="text-[10px] uppercase tracking-widest text-gray-400 mt-1 block">Countries</span>
+                        </div>
                     </div>
-                    <div>
-                        <span class="block text-3xl font-bold text-gray-900">100%</span>
-                        <span class="text-xs text-gray-500 uppercase tracking-wide">Solid Teak</span>
+                </div>
+
+                <div class="w-px bg-stone-200 self-stretch hidden lg:block"></div>
+
+                <div class="flex flex-col gap-6">
+                    <div class="w-full max-w-sm mx-auto lg:mx-0 lg:max-w-none  bg-stone-200 overflow-hidden shadow-md">
+                        <img src="{{ asset('assets/image/living-room.jpg') }}"
+                             alt="RWG living room — bespoke teak furniture in situ"
+                             class="w-full h-full object-cover hover:scale-[1.03] transition duration-1000 ease-in-out">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    {{-- ── PHILOSOPHY · WHY ────────────────────────────────────────────── --}}
+    <section class="bg-white py-32 lg:py-44">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="block text-[10px] font-bold tracking-[0.45em] uppercase text-amber-700 mb-12">Our Conviction · 02</span>
+            <blockquote class="text-3xl sm:text-4xl lg:text-[2.75rem] font-serif font-bold text-gray-900 leading-[1.3] tracking-tight">
+                "True luxury is not a surface treatment. It is structural integrity, timeless proportion, and an absolute refusal to compromise the natural spirit of the wood."
+            </blockquote>
+            <p class="text-gray-400 text-base leading-loose max-w-xl mx-auto mt-14">
+                This belief governs every decision made at RWG — from the timber we refuse, to the joinery methods we insist upon, to the finishes we apply by hand. We exist not to satisfy a market trend, but to uphold a standard that outlasts one.
+            </p>
+        </div>
+    </section>
+
+    {{-- ── FROM FOREST TO FOYER · HOW ─────────────────────────────────── --}}
+    <section class="bg-stone-50 border-t border-stone-100 py-28 lg:py-36">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start mb-20">
+                <div>
+                    <span class="block text-[10px] font-bold tracking-[0.45em] uppercase text-amber-700 mb-6">The Process · 03</span>
+                    <h2 class="text-4xl sm:text-5xl font-serif font-bold text-gray-900 leading-[1.1] tracking-tight mb-8">
+                        From Forest<br>to Foyer.
+                    </h2>
+                    <div class="space-y-5 text-gray-500 leading-loose max-w-md">
+                        <p>We accept only Grade-A certified solid teak — each plank hand-assessed for grain, density, and structural character. More timber is refused than accepted. What passes is then entrusted to our Lombok master craftsmen.</p>
+                        <p>Traditional mortise-and-tenon joinery, hand-carved relief work, and multi-layer hand-applied finishes are executed without shortcuts. The finished piece is then secured within a custom wooden export crate and coordinated through certified intercontinental cargo partners.</p>
+                        <p>From our atelier in Lombok to your foyer — wherever in the world that may be — every step of the journey is handled with the same care as the object itself.</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-5 pt-8 lg:pt-16">
+                    <div class="w-full aspect-[6/5] bg-stone-200 overflow-hidden rounded-sm shadow-sm">
+                        <img src="{{ asset('assets/image/export-loading.jpeg') }}"
+                             alt="Container loading — RWG international export"
+                             class="w-full h-full object-cover hover:scale-[1.03] transition duration-1000 ease-in-out">
                     </div>
                 </div>
             </div>
 
-            <div class="space-y-8">
-                <div class="flex gap-4">
-                    <div class="w-12 h-12 flex-shrink-0 bg-stone-50 rounded-full flex items-center justify-center text-gray-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" /></svg>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-gray-900 text-lg">Handcrafted Excellence</h3>
-                        <p class="text-gray-500 text-sm mt-1 leading-relaxed">
-                            Every piece is hand-carved by master artisans in Lombok, ensuring unique character and superior quality.
-                        </p>
+            <div class="grid sm:grid-cols-3 gap-0 border border-stone-200">
+                <div class="p-8 sm:border-r border-stone-200">
+                    <span class="block text-[10px] font-bold tracking-[0.3em] uppercase text-amber-700 mb-4">I — Selection</span>
+                    <h3 class="font-serif font-bold text-gray-900 text-xl mb-3">The Timber</h3>
+                    <p class="text-sm text-gray-500 leading-loose">Only Grade-A, legally certified solid teak is admitted. Every plank is assessed for grain, density, and natural character before a single saw is applied.</p>
+                </div>
+                <div class="p-8 sm:border-r border-stone-200 border-t sm:border-t-0">
+                    <span class="block text-[10px] font-bold tracking-[0.3em] uppercase text-amber-700 mb-4">II — Craft</span>
+                    <h3 class="font-serif font-bold text-gray-900 text-xl mb-3">The Artisan</h3>
+                    <p class="text-sm text-gray-500 leading-loose">Traditional joinery and hand-applied finishes executed by our Lombok masters — processes unchanged in method, perfected over decades of uninterrupted practice.</p>
+                </div>
+                <div class="p-8 border-t sm:border-t-0">
+                    <span class="block text-[10px] font-bold tracking-[0.3em] uppercase text-amber-700 mb-4">III — Delivery</span>
+                    <h3 class="font-serif font-bold text-gray-900 text-xl mb-3">The Journey</h3>
+                    <p class="text-sm text-gray-500 leading-loose">Custom wooden export crates, certified freight partners, and full end-to-end documentation — your piece arrives intact at any destination on earth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- ── CLOSING CTA ──────────────────────────────────────────────────── --}}
+    <section class="bg-white py-28">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 lg:gap-24 items-center">
+                <div class="flex flex-col justify-center">
+                    <span class="block text-[10px] font-bold tracking-[0.45em] uppercase text-amber-700 mb-6">Commission a Piece</span>
+                    <h2 class="text-4xl sm:text-5xl font-serif font-bold text-gray-900 leading-[1.1] tracking-tight mb-6">
+                        Begin a<br>Conversation.
+                    </h2>
+                    <p class="text-gray-500 leading-loose mb-10">
+                        Whether furnishing a private residence, a hospitality project, or a commercial space — our atelier is open to bespoke commissions and considered bulk acquisitions. Every inquiry is met with discretion and expertise.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="https://wa.me/6281945591108" target="_blank"
+                           class="inline-flex items-center justify-center gap-2 bg-[#6B4226] hover:bg-[#5D3A20] text-white font-bold py-4 px-10 rounded transition shadow-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L.057 23.633a.5.5 0 00.61.61l5.809-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.808 9.808 0 01-5.001-1.371l-.359-.214-3.724.94.957-3.625-.234-.373A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+                            Consult via WhatsApp
+                        </a>
+                        <a href="{{ route('contact') }}"
+                           class="inline-flex items-center justify-center gap-2 border-2 border-[#6B4226] text-[#6B4226] font-bold py-4 px-10 rounded hover:bg-[#6B4226] hover:text-white transition">
+                            Send an Enquiry
+                        </a>
                     </div>
                 </div>
 
-                <div class="flex gap-4">
-                    <div class="w-12 h-12 flex-shrink-0 bg-stone-50 rounded-full flex items-center justify-center text-gray-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-gray-900 text-lg">Global Shipping Expert</h3>
-                        <p class="text-gray-500 text-sm mt-1 leading-relaxed">
-                            Experienced in safe packaging and cargo logistics for worldwide delivery to ensure your items arrive safely.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="flex gap-4">
-                    <div class="w-12 h-12 flex-shrink-0 bg-stone-50 rounded-full flex items-center justify-center text-gray-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" /></svg>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-gray-900 text-lg">Quality Guarantee</h3>
-                        <p class="text-gray-500 text-sm mt-1 leading-relaxed">
-                            We use only legally certified teak wood and premium finishing materials that last for generations.
-                        </p>
+                <div class="flex items-center justify-center">
+                    <div class="w-full max-w-sm aspect-[3/4] bg-stone-100 overflow-hidden rounded-sm shadow-sm">
+                        <img src="{{ asset('assets/image/dinning-table-modern.jpeg') }}"
+                             alt="RWG contemporary dining — crafted in Lombok"
+                             class="w-full h-full object-cover hover:scale-[1.03] transition duration-1000 ease-in-out">
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div class="bg-stone-50 border border-stone-100 rounded-2xl p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="max-w-2xl">
-                <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4">Interested in Custom Projects or Bulk Orders?</h2>
-                <p class="text-gray-500">Whether you are an interior designer, architect, or looking to furnish a commercial space, our artisans are ready to bring your vision to life.</p>
-            </div>
-            <a href="https://wa.me/6281234567890" target="_blank" class="flex-shrink-0 bg-[#6B4226] text-white font-bold py-4 px-8 rounded hover:bg-[#5D3A20] transition shadow-lg flex items-center gap-2">
-                Let's Talk
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
-            </a>
-        </div>
-    </div>
+    </section>
 
 </div>

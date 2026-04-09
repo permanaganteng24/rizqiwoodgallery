@@ -1,5 +1,5 @@
 <div>
-    <div class="relative w-full h-[600px] flex items-center justify-center bg-stone-100 overflow-visible mb-24">
+    <div class="relative w-full h-[600px] lg:h-[720px] flex items-center justify-center bg-stone-100 overflow-visible mb-24">
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=2000&auto=format&fit=crop"
                 alt="Background Living Room" class="w-full h-full object-cover opacity-90">
@@ -49,7 +49,7 @@
     </div>
 
     {{-- About Section --}}
-    <section id="story" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="story" class="py-12 mb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
                 <span class="text-amber-700 font-bold tracking-wide uppercase text-sm">The Art Woodcraft</span>
@@ -75,9 +75,9 @@
                 </div>
             </div>
             <div class="relative h-[400px] md:h-[500px] mt-8 lg:mt-0">
-                <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=800&auto=format&fit=crop"
+                <img src="assets/image/dinning-table.jpeg"
                     class="absolute top-0 right-0 w-3/4 h-3/5 object-cover rounded-tr-[50px] rounded-bl-[50px] shadow-lg z-10 border-4 border-white">
-                <img src="https://images.unsplash.com/photo-1604014237800-1c9102c219da?q=80&w=800&auto=format&fit=crop"
+                <img src="assets/image/living-room.jpg"
                     class="absolute bottom-0 left-0 w-3/4 h-3/5 object-cover rounded-tl-[50px] rounded-br-[50px] shadow-lg z-0">
             </div>
         </div>
@@ -117,8 +117,8 @@
 
                     if (stripos($category->name, 'Living') !== false) {
                         $imagePath = 'assets/image/living-room.jpg';
-                    } elseif (stripos($category->name, 'Bed') !== false) {
-                        $imagePath = 'assets/image/bedroom.jpg';
+                    } elseif (stripos($category->name, 'Dining') !== false) {
+                        $imagePath = 'assets/image/dinning-table.jpeg';
                     } elseif (
                         stripos($category->name, 'Kitchen') !== false ||
                         stripos($category->name, 'Dining') !== false
