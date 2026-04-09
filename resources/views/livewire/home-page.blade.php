@@ -1,7 +1,7 @@
 <div>
     <div class="relative w-full h-[600px] lg:h-[720px] flex items-center justify-center bg-stone-100 overflow-visible mb-24">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=2000&auto=format&fit=crop"
+            <img src="assets/image/living-room.jpg"
                 alt="Background Living Room" class="w-full h-full object-cover opacity-90">
             <div class="absolute inset-0 bg-black/10"></div>
         </div>
