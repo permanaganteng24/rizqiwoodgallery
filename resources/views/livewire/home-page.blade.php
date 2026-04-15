@@ -1,9 +1,9 @@
 <div>
     <div class="relative w-full h-[600px] lg:h-[720px] flex items-center justify-center bg-stone-100 overflow-visible mb-24">
         <div class="absolute inset-0 z-0">
-            <img src="assets/image/living-room.jpg"
-                alt="Background Living Room" class="w-full h-full object-cover opacity-90">
-            <div class="absolute inset-0 bg-black/10"></div>
+            <img src="assets/image/hero-crop.png"
+                alt="Background Living Room" class="w-full h-full object-cover ">
+            <div class="absolute inset-0 bg-white/5"></div>
         </div>
 
         {{-- Hero Section --}}
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="relative h-[400px] md:h-[500px] mt-8 lg:mt-0">
-                <img src="assets/image/dinning-table.jpeg"
+                <img src="assets/image/living-room-2.jpeg"
                     class="absolute top-0 right-0 w-3/4 h-3/5 object-cover rounded-tr-[50px] rounded-bl-[50px] shadow-lg z-10 border-4 border-white">
                 <img src="assets/image/living-room.jpg"
                     class="absolute bottom-0 left-0 w-3/4 h-3/5 object-cover rounded-tl-[50px] rounded-br-[50px] shadow-lg z-0">

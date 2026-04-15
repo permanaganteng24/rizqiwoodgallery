@@ -1,6 +1,6 @@
 <div class="bg-white font-sans text-gray-700">
     <div class="relative h-72 bg-cover bg-center"
-        style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop');">
+        style="background-image: url('assets/image/hero-crop.png');">
         <div class="absolute inset-0 bg-white/60 backdrop-blur-[2px]"></div>
         <div
             class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center">

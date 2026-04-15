@@ -71,8 +71,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/shipping-info" class="text-gray-600 hover:text-amber-800 transition">
-                                Shipping & Cargo Info
+                            <a href="/reviews" class="text-gray-600 hover:text-amber-800 transition">
+                                Reviews & Ratings
                             </a>
                         </li>
                         <li>
