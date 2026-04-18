@@ -2,8 +2,8 @@
     <div class="relative w-full h-[600px] lg:h-[720px] flex items-center justify-center bg-stone-100 overflow-visible mb-24">
         <div class="absolute inset-0 z-0">
             <img src="assets/image/hero-crop.png"
-                alt="Background Living Room" class="w-full h-full object-cover ">
-            <div class="absolute inset-0 bg-white/5"></div>
+                alt="Background Living Room" class="w-full h-full object-cover opacity-90">
+            <div class="absolute inset-0 bg-black/10"></div>
         </div>
 
         {{-- Hero Section --}}
