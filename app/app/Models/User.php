@@ -39,11 +39,6 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Order::class);
     }
 
-    public function addresses(): HasMany
-    {
-        return $this->hasMany(UserAddress::class);
-    }
-
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->role === 'admin';
